@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:background="@color/light_blue"
+    android:orientation="vertical">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:hint="Client name"
+        android:id="@+id/clientName"
+        android:inputType="textShortMessage"
+        android:layout_margin="24dp"
+        android:gravity="center"/>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal">-->
+<!--        <ImageButton-->
+<!--            android:id="@+id/setTimeBut"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:src="@android:drawable/ic_media_rew"/>-->
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:hint="Time"
+        android:id="@+id/tv_eventTime"
+        android:inputType="textShortMessage"
+        android:layout_margin="24dp"
+        android:gravity="center"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:hint="Date"
+        android:id="@+id/et_eventDate"
+        android:inputType="textShortMessage"
+        android:layout_margin="24dp"
+        android:gravity="center"/>
+
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="14.00"-->
+<!--            android:gravity="center"-->
+<!--            android:textSize="22sp"-->
+<!--            android:fontFamily="@font/my_fonts"-->
+<!--            android:id="@+id/tv_eventTime"-->
+<!--            android:layout_margin="10dp"/>-->
+<!--    </LinearLayout>-->
+
+    <Button
+        android:id="@+id/addEventButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Сохранить"
+        android:gravity="center"
+        android:textAllCaps="false" />
+
+</LinearLayout>

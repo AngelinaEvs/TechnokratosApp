@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presenter.calendar.CalendarFragment"
+    android:orientation="vertical"
+    android:background="#FCFFFEF9">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ru.itis.regme.presenter.calendar.customcalendar.CustomCalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchView">
+    </ru.itis.regme.presenter.calendar.customcalendar.CustomCalendarView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_records"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarView"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/rv_record_item" />
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/textView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/white"-->
+<!--        android:fontFamily="@font/my_fonts"-->
+<!--        android:padding="8dp"-->
+<!--        android:text="Записи на 21.03.2021:"-->
+<!--        android:textColor="@color/text_color_black"-->
+<!--        android:textSize="17sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/calendarView" />-->
+
+    <!--    <ImageView-->
+<!--        android:id="@+id/imageView6"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="320dp"-->
+<!--        android:background="@drawable/ic_vector_25"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/calendarView"-->
+<!--        app:layout_constraintVertical_bias="0.0" />-->
+
+<!--    <ImageView-->
+<!--        android:layout_width="117dp"-->
+<!--        android:layout_height="120dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:background="@drawable/ic_vector_26"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/imageView7"-->
+<!--        app:layout_constraintHorizontal_bias="0.351"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView"-->
+<!--        app:layout_constraintVertical_bias="0.016" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView7"-->
+<!--        android:layout_width="41dp"-->
+<!--        android:layout_height="126dp"-->
+<!--        android:background="@drawable/ic_vector_27"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/calendarView"-->
+<!--        app:layout_constraintVertical_bias="0.978" />-->
+
+<!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+<!--        android:id="@+id/coordinatorLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="88dp"-->
+<!--        android:orientation="vertical"-->
+<!--        android:foregroundGravity="bottom"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent">-->
+
+<!--        <com.google.android.material.bottomappbar.BottomAppBar-->
+<!--            android:id="@+id/bottomAppBar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="bottom"-->
+<!--            android:backgroundTint="@color/light_blue"-->
+<!--            android:gravity="top"-->
+<!--            app:menu="@menu/app_bar_menu"-->
+<!--            app:navigationIcon="@android:drawable/btn_star" />-->
+
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:backgroundTint="@color/purple_700"-->
+<!--            android:src="@android:drawable/btn_star"-->
+<!--            android:tint="@color/white"-->
+<!--            app:layout_anchor="@id/bottomAppBar"-->
+<!--            app:maxImageSize="32dp" />-->
+
+
+<!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
