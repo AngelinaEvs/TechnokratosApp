@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.itis.regme.domain.FindUseCase
+import ru.itis.regme.presenter.calendar.customcalendar.FirebaseCallback
 import java.net.UnknownHostException
 
 class LoginViewModel(
@@ -23,6 +24,7 @@ class LoginViewModel(
     fun loginStatus(email: String, password: String) {
         viewModelScope.launch {
             try {
+                var st: Boolean? = null
                 findUseCase.loginFind(email, password).run {
                     mStatus.value = this
                     mNetworkState.value = true

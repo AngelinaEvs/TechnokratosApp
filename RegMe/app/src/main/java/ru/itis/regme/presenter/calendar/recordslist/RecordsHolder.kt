@@ -12,10 +12,10 @@ class RecordsHolder(
     override val containerView: View
 ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-    fun bind(recordItem: RecordItem) {
+    fun bind(recordItem: Pair<String, String>) {
         with (recordItem) {
-            time_records.text = time
-            client_name_records.text = nameClient
+            time_records.text = first
+            client_name_records.text = second
         }
     }
 

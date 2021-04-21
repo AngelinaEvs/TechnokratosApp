@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class RecordsAdapter (
-    private val list: List<RecordItem>
+    private val list: List<Pair<String, String>>
 ) : RecyclerView.Adapter<RecordsHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecordsHolder = RecordsHolder.create(parent)

@@ -3,6 +3,7 @@ package ru.itis.regme.domain
 import kotlinx.coroutines.withContext
 import ru.itis.regme.data.AppRepository
 import ru.itis.regme.presenter.calendar.customcalendar.Client
+import ru.itis.regme.presenter.calendar.customcalendar.FirebaseCallback
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -16,7 +17,7 @@ class FindUseCase @Inject constructor(
                 appRepository.registerUser(email, password, firstname, lastname)
             }
 
-    suspend fun loginFind(email: String, password: String): Boolean =
+    suspend fun loginFind(email: String, password: String) =
             withContext(context) {
                 appRepository.loginUser(email, password)
             }
@@ -31,8 +32,23 @@ class FindUseCase @Inject constructor(
                 appRepository.signOut()
             }
 
-    suspend fun saveRecord(month: String, date: String, time: String, client: Client) =
+    suspend fun saveRecord(year: String, month: String, date: String, time: String, client: Client) =
             withContext(context) {
-                appRepository.saveRecord(month, date, time, client)
+                appRepository.saveRecord(year, month, date, time, client)
+            }
+
+    suspend fun getRecordsForMonth(year: String, month: String, firebaseCallback: FirebaseCallback) =
+            withContext(context) {
+                appRepository.getCountRecordsForMonth(year, month, firebaseCallback)
+            }
+
+    suspend fun getRecordsForDay(year: String, month: String, day: String, firebaseCallback: FirebaseCallback) =
+            withContext(context) {
+                appRepository.getDetailsRecordsForDay(year, month, day, firebaseCallback)
+            }
+
+    suspend fun getPhoneNumbers() =
+            withContext(context) {
+                appRepository.getPhoneNumbers()
             }
 }

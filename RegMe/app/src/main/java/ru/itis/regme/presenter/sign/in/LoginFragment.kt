@@ -54,7 +54,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun initListeners() {
-        viewModel.isLogin()
+        //viewModel.isLogin()
         registerText.setOnClickListener { navController.navigate(R.id.action_to_registration) }
         loginButton.setOnClickListener {
             if (TextUtils.isEmpty(usernameInput.text.toString())) {
@@ -65,19 +65,21 @@ class LoginFragment : Fragment() {
                 usernameInput.error = "Please enter password"
                 return@setOnClickListener
             }
-            login()
+            //login()
+            viewModel.loginStatus(usernameInput.text.toString(), passwordInput.text.toString())
         }
     }
 
     private fun initSubscribes() {
-        viewModel.mainIsLogin().observe(viewLifecycleOwner, {
+        viewModel.mainStatus().observe(viewLifecycleOwner, {
             if (it) navController.navigate(R.id.action_to_profile)
         })
     }
 
     private fun login() {
-        viewModel.loginStatus(usernameInput.text.toString(), passwordInput.text.toString())
-        navController.navigate(R.id.action_to_calendar)
+//        viewModel.loginStatus(usernameInput.text.toString(), passwordInput.text.toString())
+//        navController.navigate(R.id.action_to_calendar)
+
 //        viewModel.mainIsLogin().observe(viewLifecycleOwner, {
 //            if (it) navController.navigate(R.id.action_to_profile)
 //        })

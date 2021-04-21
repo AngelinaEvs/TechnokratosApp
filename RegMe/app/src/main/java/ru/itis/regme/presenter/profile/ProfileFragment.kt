@@ -86,6 +86,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initListeners() {
+        phoneNumbers.setOnClickListener { navController.navigate(R.id.action_profile_to_numbers) }
         sign_out_but.setOnClickListener {
             viewModel.signOut()
             navController.navigate(R.id.action_profile_to_login)
