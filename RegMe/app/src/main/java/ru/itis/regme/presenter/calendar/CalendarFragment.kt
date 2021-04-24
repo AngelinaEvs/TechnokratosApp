@@ -1,26 +1,26 @@
 package ru.itis.regme.presenter.calendar
 
 import android.app.AlertDialog
-import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.calendar_fragment.*
 import kotlinx.android.synthetic.main.my_custom_calendar_layout.view.*
 import ru.itis.regme.App
 import ru.itis.regme.R
 import ru.itis.regme.presenter.calendar.customcalendar.Client
 import ru.itis.regme.presenter.calendar.customcalendar.CustomCalendarView
-import ru.itis.regme.presenter.calendar.recordslist.RecordItem
+import ru.itis.regme.presenter.calendar.customcalendar.FirebaseCallback
+import ru.itis.regme.presenter.calendar.customcalendar.MyGridAdapter
 import ru.itis.regme.presenter.calendar.recordslist.RecordsAdapter
+import java.util.*
 import javax.inject.Inject
 
 class CalendarFragment : Fragment() {
@@ -31,13 +31,15 @@ class CalendarFragment : Fragment() {
 
     @Inject lateinit var viewModel: CalendarViewModel
     private lateinit var navController: NavController
-    private lateinit var recordsAdapter: RecordsAdapter
+    private var recordsAdapter: RecordsAdapter? = null
     private lateinit var calendar: CustomCalendarView
+    private lateinit var dateFocus: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-//        CalendarFragmentViewBinding.inflate(R.layout.calendar_fragment)
-        return inflater.inflate(R.layout.calendar_fragment, container, false)
+        val view = inflater.inflate(R.layout.calendar_fragment, container, false)
+        calendar = view.findViewById(R.id.cal_test)
+        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -52,23 +54,7 @@ class CalendarFragment : Fragment() {
         navController = Navigation.findNavController(view)
         initListeners()
         initSubscribes()
-//        val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-//        var viewCalendar = inflater.inflate(R.layout.my_custom_calendar_layout, this)
-//        calendar = view.findViewById(R.id.calendarView)
-
-//        calendar.setOnDayClickedListener {
-//            viewModel.onDayClicked(position)
-//        }
-//        (viewModel::onDayClicked)
-
-//        val addView = LayoutInflater.from(context).inflate(R.layout.write_down_alert, null)
-//        addView.findViewById<Button>(R.id.addEventButton).setOnClickListener {
-//            Log.e("KKKKKKKKK", calendarView.currentMonth.text.split(" ")[1])
-//            viewModel.onSaveClicked(calendarView.currentMonth.text.split(" ")[1], calendarView.currentMonth.text.split(" ")[0], addView.findViewById<EditText>(R.id.et_eventDate).text.toString(),
-//                    addView.findViewById<EditText>(R.id.tv_eventTime).text.toString(),
-//                    Client(addView.findViewById<EditText>(R.id.clientName).text.toString(), "8912345678"))
-//        }
-
+        initGetRecords()
     }
 
     private fun initSubscribes() {
@@ -80,32 +66,73 @@ class CalendarFragment : Fragment() {
     }
 
     private fun initRecordsAdapter(list: List<Pair<String, String>>) {
-        recordsAdapter = RecordsAdapter(list)
-        rv_records.adapter = recordsAdapter
+        if (recordsAdapter != null) recordsAdapter?.updateData(list)
+        else {
+            recordsAdapter = RecordsAdapter(list as MutableList<Pair<String, String>>)
+            view?.findViewById<RecyclerView>(R.id.rv_records)?.adapter = recordsAdapter
+        }
+    }
+
+    private fun initGetRecords() {
+        with (calendar) {
+            viewModel.getInitRecords(currentDate.split(" ")[1], currentDate.split(" ")[0], object : FirebaseCallback {
+                override fun onCallback(list: List<Pair<String, Int>>) {
+                    if (myGridAdapter != null && !myGridAdapter!!.listEvents.isEmpty()) myGridAdapter?.updateData(list)
+                    else {
+                        myGridAdapter = MyGridAdapter(context, dates, calendar, list as MutableList<Pair<String, Int>>, simpleDayFormat.format(calendar.time).toInt(), simpleMonthNumberFormat.format(calendar.time).toInt())
+                        daysGrid.adapter = myGridAdapter
+                    }
+                }
+
+                override fun onCallbackForDay(list: List<Pair<String, String>>) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onCallbackForLogin(status: Boolean) {
+                    TODO("Not yet implemented")
+                }
+            })
+        }
     }
 
     private fun initListeners() {
-        //TODO из CCV передавать сюда dateFocus
-        viewModel.getRecordForDay("2021", "April", "2021-04-28")
-//        plus.setOnClickListener {
-//            lateinit var alertDialog: AlertDialog
-//            var addView = LayoutInflater.from(context).inflate(R.layout.write_down_alert, null)
-//            var builder = AlertDialog.Builder(context)
-//            builder.setCancelable(true)
-//            var dateFocus = "2021-04-29"
-//            addView.findViewById<EditText>(R.id.tv_eventTime).setText("14:00")
-//            addView.findViewById<EditText>(R.id.et_eventDate).setText(dateFocus)
-//            addView.findViewById<Button>(R.id.addEventButton).setOnClickListener {
-//                viewModel.onSaveClicked(calendarView.currentMonth?.text!!.split(" ")[1], calendarView.currentMonth?.text!!.split(" ")[0], addView.findViewById<EditText>(R.id.et_eventDate).text.toString(),
-//                        addView.findViewById<EditText>(R.id.tv_eventTime).text.toString(),
-//                        Client(addView.findViewById<EditText>(R.id.clientName).text.toString(), "8912345678"))
-//                //setUpCalendar()
-//                alertDialog.dismiss()
-//            }
-//            builder.setView(addView)
-//            alertDialog = builder.create()
-//            alertDialog.show()
-//        }
+        with(calendar) {
+            previousButton.setOnClickListener {
+                calendar.add(Calendar.MONTH, -1)
+                setUpCalendar()
+                initGetRecords()
+            }
+            nextButton.setOnClickListener {
+                calendar.add(Calendar.MONTH, 1)
+                setUpCalendar()
+                initGetRecords()
+            }
+            daysGrid?.setOnItemClickListener { adapterView, view, i, l ->
+                var date = simpleEventDateFormat.format(dates[i])
+                dateFocus = date
+                var month = simpleMonthFormat.format(dates[i])
+                var year = simpleYearFormat.format(dates[i])
+                viewModel.getRecordForDay(year, month, date)
+            }
+        }
+        plus.setOnClickListener {
+            var addView = LayoutInflater.from(context).inflate(R.layout.write_down_alert, null)
+            var builder = AlertDialog.Builder(context)
+            builder.setCancelable(true)
+            addView.findViewById<EditText>(R.id.tv_eventTime).setText("14:00")
+            addView.findViewById<EditText>(R.id.et_eventDate).setText(dateFocus)
+            addView.findViewById<Button>(R.id.addEventButton).setOnClickListener {
+                viewModel.onSaveClicked(calendar.currentMonth?.text!!.split(" ")[1], calendar.currentMonth?.text!!.split(" ")[0], addView.findViewById<EditText>(R.id.et_eventDate).text.toString(),
+                        addView.findViewById<EditText>(R.id.tv_eventTime).text.toString(),
+                        Client(addView.findViewById<EditText>(R.id.clientName).text.toString(), "8912345678"))
+                viewModel.getRecordForDay(calendar.currentMonth?.text!!.split(" ")[1], calendar.currentMonth?.text!!.split(" ")[0], addView.findViewById<EditText>(R.id.et_eventDate).text.toString())
+                calendar.setUpCalendar()
+                calendar.alertDialog.dismiss()
+            }
+            builder.setView(addView)
+            calendar.alertDialog = builder.create()
+            calendar.alertDialog.show()
+        }
     }
 
 }
