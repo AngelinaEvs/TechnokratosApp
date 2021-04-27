@@ -24,11 +24,9 @@ class MyGridAdapter(
     var inflater: LayoutInflater = LayoutInflater.from(context)
     var pointer: Int = 0
 
-    var appRepository = AppRepository(context)
+//    var appRepository = AppRepository(context)
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        Log.e("CURRENT", currentDate.toString())
-        currentDate
         val monthDate = dates[position]
         val dateCalendar = Calendar.getInstance()
         dateCalendar.time = monthDate

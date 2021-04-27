@@ -19,27 +19,24 @@ class LoginViewModel(
 
     fun mainNetworkState() : LiveData<Boolean> = mNetworkState
     fun mainStatus(): LiveData<Boolean> = mStatus
-    fun mainIsLogin(): LiveData<Boolean> = mIsLogin
 
     fun loginStatus(email: String, password: String) {
         viewModelScope.launch {
             try {
-                var st: Boolean? = null
-                findUseCase.loginFind(email, password).run {
-                    mStatus.value = this
+                findUseCase.loginFind(email, password, object : FirebaseCallback{
+                    override fun onCallback(list: List<Pair<String, Int>>) { }
+
+                    override fun onCallbackForDay(list: List<Pair<String, String>>) { }
+
+                    override fun onCallbackForLogin(status: Boolean) {
+                       mStatus.value = status
+                    }
+
+                }).run {
                     mNetworkState.value = true
                 }
             } catch (throwable: UnknownHostException) {
                 mNetworkState.value = false
-            }
-        }
-    }
-
-    fun isLogin() {
-        var flag: Boolean = false
-        viewModelScope.launch {
-            findUseCase.isLogin().run {
-                mIsLogin.value = this
             }
         }
     }

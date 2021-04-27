@@ -1,22 +1,18 @@
 package ru.itis.regme.data
 
 import android.content.Context
-import android.provider.CalendarContract
 import android.provider.ContactsContract
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.suspendCancellableCoroutine
 import ru.itis.regme.presenter.ContactModel
 import ru.itis.regme.presenter.calendar.customcalendar.Client
-import ru.itis.regme.presenter.calendar.customcalendar.Events
 import ru.itis.regme.presenter.calendar.customcalendar.FirebaseCallback
 import ru.itis.regme.presenter.calendar.customcalendar.Record
 
 class AppRepository(
-    var context: Context
+        var context: Context
 ) {
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private var databaseReference: DatabaseReference? = null
@@ -40,9 +36,8 @@ class AppRepository(
             }
         }
         cursor?.close()
-        Log.e("REPOSIT: ", arrayContacts.toString())
         return arrayContacts
-    } //можно доставать те, которые помечены Клиент словом в  нэйме или каких-то там атрибутах/группах
+    }
 
     fun isLogin(): Boolean {
         val currentUser = auth.currentUser
@@ -68,10 +63,7 @@ class AppRepository(
                         callback.onCallback(list)
                     }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-
+                    override fun onCancelled(error: DatabaseError) {}
                 })
     }
 
@@ -91,14 +83,11 @@ class AppRepository(
                             var t = item.child("time").value.toString()
                             var name = item.child("client").child("name").value.toString()
                             list.add(Pair(t, name))
-                            Log.e("DAY", list.toString())
                         }
                         callback.onCallbackForDay(list)
                     }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
+                    override fun onCancelled(error: DatabaseError) {}
 
                 })
     }
@@ -116,45 +105,30 @@ class AppRepository(
     fun registerUser(email: String, password: String, firstname: String, lastname: String) {
         databaseReference = database.reference.child("profile")
         auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    val currentUser = auth.currentUser
-                    val currentUserDb = databaseReference?.child((currentUser?.uid!!))
-                    currentUserDb?.child("firstname")?.setValue(firstname)
-                    currentUserDb?.child("lastname")?.setValue(lastname)
-                    currentUser?.sendEmailVerification()
-                    Toast.makeText(context, "Registration Success!", Toast.LENGTH_LONG).show()
-                } else Toast.makeText(context, "Registration failed, please try again!", Toast.LENGTH_LONG).show()
-            }
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val currentUser = auth.currentUser
+                        val currentUserDb = databaseReference?.child((currentUser?.uid!!))
+                        currentUserDb?.child("firstname")?.setValue(firstname)
+                        currentUserDb?.child("lastname")?.setValue(lastname)
+                        currentUser?.sendEmailVerification()
+                        Toast.makeText(context, "Registration Success!", Toast.LENGTH_LONG).show()
+                    } else Toast.makeText(context, "Registration failed, please try again!", Toast.LENGTH_LONG).show()
+                }
     }
 
-    fun loginUser(email: String, password: String) : Boolean {
+    fun loginUser(email: String, password: String, callback: FirebaseCallback) {
         var flag = false
-//            var user = auth.currentUser
-//            if (user!!.isEmailVerified) return true
-//            else {
-//                //Toast.makeText(context, "Check email", Toast.LENGTH_LONG).show()
-//                return false
-//            }
         auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            //TODO callback надо
-                            var user = auth.currentUser
-                            if (user!!.isEmailVerified) flag = true
-                            Log.e("FLAGGGGGGGGg", flag.toString())
-//                        } else {
-//                            user?.sendEmailVerification()
-//                            Toast.makeText(context, "Check email", Toast.LENGTH_LONG).show()
-//                        }
-                        } else {
-//                            Toast.makeText(context, "Fail! ", Toast.LENGTH_LONG).show()
-//                            return false
-                        }
-                    }
-//        }
-        Log.e("FLAG", flag.toString())
-            return flag
-        }
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        var user = auth.currentUser
+                        if (user!!.isEmailVerified) flag = true
+                        else Toast.makeText(context, "Check email", Toast.LENGTH_LONG).show()
+                        Log.e("FLAGGGGGGGGg", flag.toString())
+                        callback.onCallbackForLogin(flag)
+                    } else Toast.makeText(context, "Fail! ", Toast.LENGTH_LONG).show()
+                }
+    }
 
 }

@@ -26,9 +26,9 @@ class CustomCalendarView(
     var simpleYearFormat = SimpleDateFormat("yyyy", Locale.ENGLISH)
     var simpleDayFormat = SimpleDateFormat("dd", Locale.ENGLISH)
     var simpleEventDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-    public var myGridAdapter: MyGridAdapter? = null
+    var myGridAdapter: MyGridAdapter? = null
     lateinit var alertDialog: AlertDialog
-    lateinit var currentDate: String
+    var currentDate = simpleDataFormat.format(calendar.time)
     var dates = ArrayList<Date>()
 //    var eventsList = ArrayList<Events>()
 
@@ -82,8 +82,8 @@ class CustomCalendarView(
         monthCalendar.set(Calendar.DAY_OF_MONTH, 1)
         val firstDayOfMonth = monthCalendar.get(Calendar.DAY_OF_WEEK) - 2
         monthCalendar.add(Calendar.DAY_OF_MONTH, -firstDayOfMonth)
-        datesListRecords = ArrayList()
-        val recordList = ArrayList<Pair<String, Int>>()
+//        datesListRecords = ArrayList()
+//        val recordList = ArrayList<Pair<String, Int>>()
         while (dates.size < MAX_DAYS_IN_MONTH) {
             dates.add(monthCalendar.time)
             monthCalendar.add(Calendar.DAY_OF_MONTH, 1)

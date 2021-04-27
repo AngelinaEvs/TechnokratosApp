@@ -17,9 +17,9 @@ class FindUseCase @Inject constructor(
                 appRepository.registerUser(email, password, firstname, lastname)
             }
 
-    suspend fun loginFind(email: String, password: String) =
+    suspend fun loginFind(email: String, password: String, callback: FirebaseCallback) =
             withContext(context) {
-                appRepository.loginUser(email, password)
+                appRepository.loginUser(email, password, callback)
             }
 
     suspend fun isLogin(): Boolean =

@@ -1,6 +1,5 @@
 package ru.itis.regme.presenter.calendar
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,26 +13,20 @@ class CalendarViewModel(
     private val findUseCase: FindUseCase
 ) : ViewModel() {
     private val mRecordsForDay: MutableLiveData<List<Pair<String, String>>> = MutableLiveData()
+    private val mRecordsForCalendar: MutableLiveData<List<Pair<String, Int>>> = MutableLiveData()
 
-    fun mainRecordsDay() : LiveData<List<Pair<String, String>>> = mRecordsForDay
+    fun mainRecordsDay(): LiveData<List<Pair<String, String>>> = mRecordsForDay
+    fun mainRecordsCalendar(): LiveData<List<Pair<String, Int>>> = mRecordsForCalendar
 
     fun getRecordForDay(year: String, month: String, day: String) {
         viewModelScope.launch {
             findUseCase.getRecordsForDay(year, month, day, object : FirebaseCallback {
-                override fun onCallback(list: List<Pair<String, Int>>) {
-                    TODO("Not yet implemented")
-                }
-
+                override fun onCallback(list: List<Pair<String, Int>>) { }
                 override fun onCallbackForDay(list: List<Pair<String, String>>) {
                     mRecordsForDay.value = list
                 }
-
-                override fun onCallbackForLogin(status: Boolean) {
-                    TODO("Not yet implemented")
-                }
-
+                override fun onCallbackForLogin(status: Boolean) {}
             })
-            Log.e("AAAAAAAA", mRecordsForDay.value.toString())
         }
 //
 //
@@ -54,9 +47,16 @@ class CalendarViewModel(
         }
     }
 
-    fun getInitRecords(year: String, month: String, callback: FirebaseCallback) {
+    fun getInitRecords(year: String, month: String) {
         viewModelScope.launch {
-            findUseCase.getRecordsForMonth(year, month, callback)
+            findUseCase.getRecordsForMonth(year, month, object : FirebaseCallback {
+                override fun onCallback(list: List<Pair<String, Int>>) {
+                    mRecordsForCalendar.value = list
+                }
+                override fun onCallbackForDay(list: List<Pair<String, String>>) {}
+                override fun onCallbackForLogin(status: Boolean) {}
+            })
+
         }
     }
 
