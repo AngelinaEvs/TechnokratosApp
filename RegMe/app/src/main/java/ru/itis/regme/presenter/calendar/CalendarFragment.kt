@@ -3,6 +3,7 @@ package ru.itis.regme.presenter.calendar
 import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,18 +20,14 @@ import kotlinx.android.synthetic.main.calendar_fragment.*
 import kotlinx.android.synthetic.main.my_custom_calendar_layout.view.*
 import ru.itis.regme.App
 import ru.itis.regme.R
+import ru.itis.regme.presenter.calendar.customcalendar.CalendarCallback
 import ru.itis.regme.presenter.calendar.customcalendar.Client
 import ru.itis.regme.presenter.calendar.customcalendar.CustomCalendarView
 import ru.itis.regme.presenter.calendar.customcalendar.MyGridAdapter
 import ru.itis.regme.presenter.calendar.recordslist.RecordsAdapter
-import java.util.*
 import javax.inject.Inject
 
 class CalendarFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = CalendarFragment()
-    }
 
     @Inject
     lateinit var viewModel: CalendarViewModel
@@ -50,6 +47,7 @@ class CalendarFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        calendar.calendarCallback = cc
         (activity?.application as App).appComponent.calendarComponentFactory()
                 .create(this)
                 .inject(this)
@@ -102,25 +100,8 @@ class CalendarFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun initListeners() {
-        with(calendar) {
-            previousButton.setOnClickListener {
-                calendar.add(Calendar.MONTH, -1)
-                setUpCalendar()
-                initGetRecords()
-            }
-            nextButton.setOnClickListener {
-                calendar.add(Calendar.MONTH, 1)
-                setUpCalendar()
-                initGetRecords()
-            }
-            daysGrid?.setOnItemClickListener { adapterView, view, i, l ->
-                val date = simpleEventDateFormat.format(dates[i])
-                month = simpleMonthFormat.format(dates[i])
-                dateFocus = date
-                viewModel.getRecordForDay(date.split("-")[0], month, date)
-            }
-        }
         plus.setOnClickListener {
+            var alertDialog: AlertDialog
             val addView = LayoutInflater.from(context).inflate(R.layout.write_down_alert, null)
             val builder = AlertDialog.Builder(context)
             builder.setCancelable(true)
@@ -136,17 +117,39 @@ class CalendarFragment : Fragment() {
                 addView.findViewById<EditText>(R.id.tv_eventTime).setText(hour.toString() + ":" + minutes.toString())
                 time = "$hour:$minutes"
             }
+            builder.setView(addView)
+            alertDialog = builder.create()
             addView.findViewById<Button>(R.id.addEventButton).setOnClickListener {
                 viewModel.onSaveClicked(y, month, dateFocus,
                         time, Client(addView.findViewById<EditText>(R.id.clientName).text.toString(), "8912345678"))
                 viewModel.getRecordForDay(y, calendar.currentMonth?.text!!.split(" ")[0], dateFocus)
                 viewModel.getInitRecords(y, month)
                 calendar.setUpCalendar()
-                calendar.alertDialog.dismiss()
+                alertDialog.dismiss()
             }
-            builder.setView(addView)
-            calendar.alertDialog = builder.create()
-            calendar.alertDialog.show()
+            alertDialog.show()
+        }
+    }
+
+    private var cc = object : CalendarCallback {
+        override fun next() {
+            Log.e("NEXT", "SAAAAA")
+            initGetRecords()
+        }
+
+        override fun prev() {
+            Log.e("PREV", "FROM FRAGMENT")
+            initGetRecords()
+        }
+
+        override fun setOnItemClickListener(year: String, monthCB: String, date: String) {
+            dateFocus = date
+            month = monthCB
+            viewModel.getRecordForDay(year, monthCB, date)
+        }
+
+        override fun current(date: String, monthCB: String) {
+            Log.e("HELLO", "HELLO")
         }
     }
 

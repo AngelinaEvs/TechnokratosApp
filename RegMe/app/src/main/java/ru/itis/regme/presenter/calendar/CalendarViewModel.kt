@@ -28,17 +28,6 @@ class CalendarViewModel(
                 override fun onCallbackForLogin(status: Boolean) {}
             })
         }
-//
-//
-//        appRepository.getDetailsRecordsForDay("2021", "April", "2021-04-28", object : FirebaseCallback{
-//            override fun onCallbackForDay(list: List<Pair<String, String>>) {
-//                Log.e("AAAAAAAA", list.toString())
-//            }
-//
-//            override fun onCallback(list: List<Pair<String, Int>>) {
-//                TODO("Not yet implemented")
-//            }
-//        })
     }
 
     fun onSaveClicked(year: String, month: String, date: String, time: String, client: Client) {
