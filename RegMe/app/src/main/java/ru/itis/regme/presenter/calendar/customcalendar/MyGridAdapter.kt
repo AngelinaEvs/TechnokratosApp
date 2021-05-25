@@ -1,30 +1,24 @@
 package ru.itis.regme.presenter.calendar.customcalendar
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import ru.itis.regme.R
-import ru.itis.regme.data.AppRepository
 import java.util.*
 
 class MyGridAdapter(
-        context: Context,
-        var dates: List<Date>,
-        var currentDate: Calendar,
-//    var listEvents: List<Events>
-//    var listEvents: List<String>
-        var listEvents: MutableList<Pair<String, Int>>,
-        var today: Int,
-        var todayMonth: Int
+    context: Context,
+    var dates: List<Date>,
+    var currentDate: Calendar,
+    var listEvents: MutableList<Pair<String, Int>>,
+    var today: Int,
+    var todayMonth: Int
 ) : ArrayAdapter<Date>(context, R.layout.single_item, dates) {
     var inflater: LayoutInflater = LayoutInflater.from(context)
     var pointer: Int = 0
-
-//    var appRepository = AppRepository(context)
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val monthDate = dates[position]
@@ -39,13 +33,13 @@ class MyGridAdapter(
         if (convertView == null) view = inflater.inflate(R.layout.single_item, parent, false)
         val tv = view?.findViewById<TextView>(R.id.day_item)
         tv?.text = dayNo.toString()
-//        var eventNumber = view?.findViewById<TextView>(R.id.event_id)
-        if (!(displayMonth == currentMonth && displayYear == currentYear)) view?.setBackgroundResource(R.drawable.back_grey_item_calendar)
+        if (!(displayMonth == currentMonth && displayYear == currentYear)) view?.setBackgroundResource(
+            R.drawable.back_grey_item_calendar
+        )
         else {
             if (pointer < listEvents.size) {
                 val day = listEvents[pointer].first.split("-")[2].toInt()
                 val mon = listEvents[pointer].first.split("-")[1].toInt()
-//                val year = listEvents[pointer].first.split("-")[0].toInt()
                 if (dayNo == day && displayMonth == mon) {
                     if (listEvents[pointer].second == 1) {
                         if (day == today && mon == todayMonth) view?.setBackgroundResource(R.drawable.back_today_green)
@@ -58,12 +52,15 @@ class MyGridAdapter(
                     }
                 } else view?.setBackgroundResource(R.drawable.back_empty_item_calendar)
             } else {
-                if (!(displayMonth == currentMonth && displayYear == currentYear)) view?.setBackgroundResource(R.drawable.back_grey_item_calendar)
+                if (!(displayMonth == currentMonth && displayYear == currentYear)) view?.setBackgroundResource(
+                    R.drawable.back_grey_item_calendar
+                )
                 else view?.setBackgroundResource(R.drawable.back_empty_item_calendar)
             }
         }
         return view!!
     }
+
     override fun getCount(): Int = dates.size
 
     override fun getPosition(item: Date?): Int = dates.indexOf(item)

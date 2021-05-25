@@ -6,7 +6,7 @@ import dagger.Provides
 import kotlinx.coroutines.Dispatchers
 import ru.itis.regme.common.ResourceManager
 import ru.itis.regme.common.ResourceManagerImpl
-import ru.itis.regme.data.AppRepository
+import ru.itis.regme.data.repository.FirebaseRepository
 import ru.itis.regme.domain.FindUseCase
 import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
@@ -16,8 +16,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideAppFindUseCase(appRepository: AppRepository/*, coroutineContext: CoroutineContext*/): FindUseCase {
-        return FindUseCase(appRepository, Dispatchers.IO)
+    fun provideAppFindUseCase(firebaseRepository: FirebaseRepository/*, coroutineContext: CoroutineContext*/): FindUseCase {
+        return FindUseCase(firebaseRepository, Dispatchers.IO)
     }
 
     @Provides

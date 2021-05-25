@@ -1,4 +1,4 @@
-package ru.itis.regme.presenter.phoneNumbers.di
+package ru.itis.regme.presenter.clients.di
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
@@ -9,8 +9,7 @@ import dagger.multibindings.IntoMap
 import ru.itis.regme.di.ViewModelKey
 import ru.itis.regme.di.ViewModelModule
 import ru.itis.regme.domain.FindUseCase
-import ru.itis.regme.presenter.phoneNumbers.PhoneNumbersViewModel
-import ru.itis.regme.presenter.splash.SplashViewModel
+import ru.itis.regme.presenter.clients.PhoneNumbersViewModel
 
 @Module(includes = [ViewModelModule::class])
 class PhoneNumbersModule {

@@ -1,12 +1,19 @@
 package ru.itis.regme
 
 import android.Manifest
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import ru.itis.regme.presenter.notifications.NotificationReceiver
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private val READ_CONTACTS = Manifest.permission.READ_CONTACTS
@@ -16,6 +23,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initContacts()
+//        var periodicWorkRequest = PeriodicWorkRequest.Builder(NotificationWorkerManager::class.java, 15, TimeUnit.MINUTES)
+////            .setPeriodStartTime(18L, TimeUnit.HOURS)
+//            .build()
+//        WorkManager.getInstance().enqueue(periodicWorkRequest)
+
+        //TODO change by user preferences
+        val c = Calendar.getInstance()
+        c.set(Calendar.HOUR_OF_DAY, 18)
+//        c.set(Calendar.MINUTE, 0)
+//        c.set(Calendar.SECOND, 0)
+        val am = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, NotificationReceiver::class.java).let { intent ->
+            PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.timeInMillis, 1000 * 3600 * 24, intent)
     }
 
     private fun initContacts() {

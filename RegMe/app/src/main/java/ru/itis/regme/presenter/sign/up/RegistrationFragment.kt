@@ -1,6 +1,5 @@
 package ru.itis.regme.presenter.sign.up
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
@@ -16,11 +15,8 @@ import kotlinx.android.synthetic.main.registration_fragment.lastnameInput
 import kotlinx.android.synthetic.main.registration_fragment.passwordInput
 import kotlinx.android.synthetic.main.registration_fragment.registerButton
 import kotlinx.android.synthetic.main.registration_fragment.usernameInput
-import kotlinx.coroutines.Dispatchers
 import ru.itis.regme.App
 import ru.itis.regme.R
-import ru.itis.regme.data.AppRepository
-import ru.itis.regme.domain.FindUseCase
 import javax.inject.Inject
 
 class RegistrationFragment : Fragment() {

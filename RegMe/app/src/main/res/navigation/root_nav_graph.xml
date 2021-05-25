@@ -66,14 +66,27 @@
         <action
             android:id="@+id/action_profile_to_numbers"
             app:destination="@+id/numbers"/>
+        <action
+            android:id="@+id/action_profile_to_choiceClientsFragment"
+            app:destination="@id/choiceClientsFragment" />
+        <!--        <action-->
+<!--            android:id="@+id/action_profile_to_choiceClientsFragment"-->
+<!--            app:destination="@id/choiceClientsFragment" />-->
+<!--        <action-->
+<!--            android:id="@+id/action_profile_to_numbers"-->
+<!--            app:destination="@id/choiceClientsFragment" />-->
     </fragment>
 
     <fragment
         android:id="@+id/numbers"
-        android:name="ru.itis.regme.presenter.phoneNumbers.PhoneNumbersFragment"
+        android:name="ru.itis.regme.presenter.clients.PhoneNumbersFragment"
         tools:layout="@layout/phone_numbers_fragment">
     </fragment>
-
+    <fragment
+        android:id="@+id/choiceClientsFragment"
+        android:name="ru.itis.regme.presenter.clients.choice.ChoiceClientsFragment"
+        android:label="choice_clients_fragment"
+        tools:layout="@layout/choice_clients_fragment" />
 
 
 </navigation>

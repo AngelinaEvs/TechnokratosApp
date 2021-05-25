@@ -1,13 +1,10 @@
-package ru.itis.regme.presenter.phoneNumbers.di
+package ru.itis.regme.presenter.clients.di
 
 import androidx.fragment.app.Fragment
 import dagger.BindsInstance
 import dagger.Subcomponent
 import ru.itis.regme.di.ScreenScope
-import ru.itis.regme.presenter.phoneNumbers.PhoneNumbersFragment
-import ru.itis.regme.presenter.splash.SplashFragment
-import ru.itis.regme.presenter.splash.di.SplashComponent
-import ru.itis.regme.presenter.splash.di.SplashModule
+import ru.itis.regme.presenter.clients.PhoneNumbersFragment
 
 @Subcomponent(
     modules = [PhoneNumbersModule::class]

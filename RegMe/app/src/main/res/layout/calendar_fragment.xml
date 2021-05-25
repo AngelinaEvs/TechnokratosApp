@@ -7,18 +7,16 @@
     tools:context=".presenter.calendar.CalendarFragment"
     android:orientation="vertical"
     android:background="#FAFBF6">
-<!--    android:background="#FCFFFEF9">-->
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/white" />
+<!--    <androidx.appcompat.widget.SearchView-->
+<!--        android:id="@+id/searchView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="48dp"-->
+<!--        android:background="@color/white" />-->
 
-<!--    360dp-->
     
     <ru.itis.regme.presenter.calendar.customcalendar.CustomCalendarView
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:id="@+id/cal_test"
         android:layout_width="340dp"
         android:layout_height="wrap_content"
@@ -60,6 +58,13 @@
             android:background="@drawable/back_records_tv"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="2dp"/>
+
+        <TextView
+            android:id="@+id/wa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="***"
+            android:layout_marginLeft="16dp"/>
 
         <TextView
             android:id="@+id/set_status_for_day"

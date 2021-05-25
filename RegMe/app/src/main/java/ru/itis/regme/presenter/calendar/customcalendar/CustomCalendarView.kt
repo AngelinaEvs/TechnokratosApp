@@ -1,16 +1,11 @@
 package ru.itis.regme.presenter.calendar.customcalendar
 
-import android.app.AlertDialog
-import android.app.AlertDialog.Builder
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.*
 import kotlinx.android.synthetic.main.my_custom_calendar_layout.view.*
 import ru.itis.regme.R
-import ru.itis.regme.data.AppRepository
-import ru.itis.regme.presenter.calendar.CalendarFragment
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -31,7 +26,8 @@ class CustomCalendarView(
     var currentDate = simpleDataFormat.format(calendar.time)
     var dates = ArrayList<Date>()
     var a = 0
-    lateinit var calendarCallback: CalendarCallback
+    var calendarCallback = CalendarCallback.EMPTY
+
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -44,6 +40,14 @@ class CustomCalendarView(
         }
         previousButton.setOnClickListener { prev() }
         nextButton.setOnClickListener { next() }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        var curDate = simpleEventDateFormat.format(calendar.time)
+        var curMonth = simpleMonthFormat.format(calendar.time)
+        calendarCallback.currentMonth(curDate, simpleMonthFormat.format(calendar.time))
+        //calendarCallback.currentDay(curDate.split("-")[0], curMonth, curDate)
     }
 
     fun prev() {

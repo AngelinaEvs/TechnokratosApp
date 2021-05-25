@@ -27,6 +27,8 @@
             android:theme="@style/LoginAndRegistration">
 
         </activity>
+
+        <receiver android:name=".presenter.notifications.NotificationReceiver"/>
     </application>
 
 </manifest>

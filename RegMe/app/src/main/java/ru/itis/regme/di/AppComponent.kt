@@ -3,9 +3,11 @@ package ru.itis.regme.di
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
+import ru.itis.regme.data.di.DBModule
 import ru.itis.regme.data.di.RepoModule
 import ru.itis.regme.presenter.calendar.di.CalendarComponent
-import ru.itis.regme.presenter.phoneNumbers.di.PhoneNumbersComponent
+import ru.itis.regme.presenter.clients.choice.di.ChoiceComponent
+import ru.itis.regme.presenter.clients.di.PhoneNumbersComponent
 import ru.itis.regme.presenter.profile.di.ProfileComponent
 import ru.itis.regme.presenter.sign.`in`.di.SignInComponent
 import ru.itis.regme.presenter.sign.up.di.RegistrationComponent
@@ -15,7 +17,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
-//        DbModule::class,
+        DBModule::class,
 //        NetworkModule::class,
         AppModule::class,
         RepoModule::class
@@ -43,4 +45,6 @@ interface AppComponent {
     fun splashComponentFactory(): SplashComponent.Factory
 
     fun phoneNumberComponentFactory(): PhoneNumbersComponent.Factory
+
+    fun choiceComponentFactory(): ChoiceComponent.Factory
 }
