@@ -1,12 +1,11 @@
 package ru.itis.regme.data.repository
 
 import android.content.Context
-import android.provider.ContactsContract
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import ru.itis.regme.presenter.ContactModel
+import ru.itis.regme.presenter.calendar.ContactModel
 import ru.itis.regme.presenter.calendar.customcalendar.Client
 import ru.itis.regme.presenter.calendar.customcalendar.FirebaseCallback
 import ru.itis.regme.presenter.calendar.customcalendar.Record

@@ -13,7 +13,7 @@ class RecordsAdapter (
 
     override fun onBindViewHolder(holder: RecordsHolder, position: Int) = holder.bind(list[position])
 
-    fun updateData(list: List<Pair<String, String>>): Unit {
+    fun updateData(list: List<Pair<String, String>>) {
         this.list.clear()
         this.list.addAll(list)
         notifyDataSetChanged()

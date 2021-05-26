@@ -21,4 +21,7 @@ interface ClientDao {
     @Insert
     fun save(listClient: List<Client>)
 
+    @Query("delete from Client where number = :number")
+    fun delete(number: String)
+
 }

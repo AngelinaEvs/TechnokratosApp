@@ -19,14 +19,6 @@ class RecordsHolder(
         }
     }
 
-//    fun updateFromBundle(bundle: Bundle) {
-//        if (bundle.containsKey("ARG_NAME")) {
-//            bundle.getString("ARG_NAME").also {
-//                search_text.text = it
-//            }
-//        }
-//    }
-
     companion object {
         fun create(parent: ViewGroup): RecordsHolder
             = RecordsHolder(LayoutInflater.from(parent.context).inflate(R.layout.rv_record_item, parent, false))

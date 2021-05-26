@@ -1,15 +1,12 @@
 package ru.itis.regme.presenter.calendar
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.itis.regme.data.db.model.Client
 import ru.itis.regme.domain.ClientInterractor
 import ru.itis.regme.domain.FindUseCase
-import ru.itis.regme.presenter.ContactModel
 import ru.itis.regme.presenter.calendar.customcalendar.FirebaseCallback
 
 class CalendarViewModel(
@@ -18,25 +15,20 @@ class CalendarViewModel(
 ) : ViewModel() {
     private val mRecordsForDay: MutableLiveData<List<Pair<String, String>>> = MutableLiveData()
     private val mRecordsForCalendar: MutableLiveData<List<Pair<String, Int>>> = MutableLiveData()
-    private val mPhNumbers: MutableLiveData<List<Client>> = MutableLiveData()
     private val mPhNumbersString: MutableLiveData<ArrayList<String>> = MutableLiveData()
-
 
     fun mainRecordsDay(): LiveData<List<Pair<String, String>>> = mRecordsForDay
     fun mainRecordsCalendar(): LiveData<List<Pair<String, Int>>> = mRecordsForCalendar
-    fun mainPnNumbers(): LiveData<List<Client>> = mPhNumbers
     fun mainPnNumbersString(): LiveData<ArrayList<String>> = mPhNumbersString
 
     fun findAllPhNumbers() {
         viewModelScope.launch {
             interractor.findAllClients().run {
-//                mPhNumbersString.value = ArrayList<String>()
                 var list = ArrayList<String>()
                 for (i in this.indices) {
                     list.add(this[i].toString())
                 }
                 mPhNumbersString.value = list
-                Log.e("VIEW MOD", mPhNumbersString.value.toString())
             }
         }
     }

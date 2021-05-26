@@ -1,4 +1,4 @@
-package ru.itis.regme.presenter
+package ru.itis.regme.presenter.calendar
 
 data class ContactModel(
         var time: String,

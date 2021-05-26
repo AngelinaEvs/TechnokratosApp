@@ -17,11 +17,14 @@ class SplashFragment : Fragment() {
         fun newInstance() = SplashFragment()
     }
 
-    @Inject lateinit var viewModel: SplashViewModel
+    @Inject
+    lateinit var viewModel: SplashViewModel
     private lateinit var navController: NavController
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.splash_fragment, container, false)
     }
 

@@ -1,8 +1,7 @@
 package ru.itis.regme.presenter.calendar
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -25,7 +24,6 @@ import ru.itis.regme.presenter.calendar.customcalendar.CustomCalendarView
 import ru.itis.regme.presenter.calendar.customcalendar.MyGridAdapter
 import ru.itis.regme.presenter.calendar.recordslist.RecordsAdapter
 import javax.inject.Inject
-import android.content.pm.PackageManager as PackageManager
 
 class CalendarFragment : Fragment() {
 
@@ -36,33 +34,27 @@ class CalendarFragment : Fragment() {
     private lateinit var calendar: CustomCalendarView
     private lateinit var dateFocus: String
     private lateinit var month: String
+    private lateinit var rec: TextView
     var nnn = arrayListOf<String>()
 
     private var cc = object : CalendarCallback {
         override fun next() {
-            Log.e("NEXT", "SAAAAA")
             initGetRecords()
         }
 
         override fun prev() {
-            Log.e("PREV", "FROM FRAGMENT")
             initGetRecords()
         }
 
         override fun setOnItemClickListener(year: String, monthCB: String, date: String) {
             dateFocus = date
             month = monthCB
+            val a = dateFocus.split("-")
+            rec.text = (a[2] + "." + a[1] + "." + a[0])
             viewModel.getRecordForDay(year, monthCB, date)
         }
 
-        override fun currentMonth(date: String, monthCB: String) {
-            Log.e("HELLO", "HELLO CURRENT MONTH")
-
-        }
-
         override fun currentDay(year: String, monthCB: String, date: String) {
-            Log.e("CURRENT DAY", "DAY")
-//            val d = date
             dateFocus = date
             month = monthCB
             viewModel.getRecordForDay(year, monthCB, date)
@@ -73,6 +65,7 @@ class CalendarFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.calendar_fragment, container, false)
         calendar = view.findViewById(R.id.cal_test)
+        rec = view.findViewById(R.id.rec)
         calendar.calendarCallback = cc
         return view
     }
@@ -89,27 +82,6 @@ class CalendarFragment : Fragment() {
         initGetRecords()
         initToday()
         viewModel.findAllPhNumbers()
-        wa.setOnClickListener {
-            var mess = "Hi!!!"
-            var num = "79677707814"
-            if (num.startsWith("8")) num = "7" + num.substring(1)
-            val isInstalled = isInstalled()
-            if (isInstalled) {
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.setData(Uri.parse("https://api.whatsapp.com/send/?phone=" + 79677707814 + "&text=" + mess))// + "&app_absent=0"))
-                startActivity(intent)
-            } else Toast.makeText(requireContext(), "Whats app не установлен на этом устройстве", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    fun isInstalled(): Boolean {
-        val packageManager = requireContext().packageManager
-        try {
-            packageManager.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES)
-            return true
-        } catch (notFound: PackageManager.NameNotFoundException) {
-            return false
-        }
     }
 
     private fun initToday() {
@@ -117,6 +89,8 @@ class CalendarFragment : Fragment() {
             val d = simpleEventDateFormat.format(calendar.time)
             dateFocus = d
             month = simpleMonthFormat.format(calendar.time)
+            val a = dateFocus.split("-")
+            rec.text = (a[2] + "." + a[1] + "." + a[0])
             viewModel.getRecordForDay(d.split("-")[0], simpleMonthFormat.format(calendar.time).toString(), d)
         }
     }
@@ -156,16 +130,15 @@ class CalendarFragment : Fragment() {
         }
     }
 
+    @SuppressLint("CutPasteId")
     @RequiresApi(Build.VERSION_CODES.M)
     private fun initListeners() {
         plus.setOnClickListener {
             val alertDialog: AlertDialog
             val addView = LayoutInflater.from(context).inflate(R.layout.write_down_alert, null)
-
             val autoCompleteTextView = addView.findViewById<AutoCompleteTextView>(R.id.cl)
             val ad = ArrayAdapter(requireContext(), android.R.layout.simple_expandable_list_item_1, nnn)
             autoCompleteTextView.setAdapter(ad)
-
             val builder = AlertDialog.Builder(context)
             builder.setCancelable(true)
             val timePicker = addView.findViewById<TimePicker>(R.id.tp)
@@ -177,15 +150,14 @@ class CalendarFragment : Fragment() {
             addView.findViewById<TextView>(R.id.info_record).text = "Запись на $d.$m.$y:"
             var time = timePicker.hour.toString() + ":" + timePicker.minute
             timePicker.setOnTimeChangedListener { _, hour, minutes ->
-//                addView.findViewById<EditText>(R.id.tv_eventTime).setText(hour.toString() + ":" + minutes.toString())
                 time = "$hour:$minutes"
             }
             builder.setView(addView)
             alertDialog = builder.create()
-            addView.findViewById<Button>(R.id.addEventButton).setOnClickListener {
-                var cl = addView.findViewById<AutoCompleteTextView>(R.id.cl).text.toString()
-                var name = cl.split("(")[0]
-                var phone = cl.split("(")[1].split(")")[0]
+            addView.findViewById<TextView>(R.id.addEventButton).setOnClickListener {
+                val cl = addView.findViewById<AutoCompleteTextView>(R.id.cl).text.toString()
+                val name = cl.split("(")[0]
+                val phone = cl.split("(")[1].split(")")[0]
                 viewModel.onSaveClicked(y, month, dateFocus,
                         time, Client(name, phone))
                 viewModel.getRecordForDay(y, calendar.currentMonth?.text!!.split(" ")[0], dateFocus)

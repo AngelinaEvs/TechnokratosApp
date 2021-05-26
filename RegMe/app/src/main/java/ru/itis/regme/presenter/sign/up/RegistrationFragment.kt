@@ -35,36 +35,29 @@ class RegistrationFragment : Fragment() {
         return inflater.inflate(R.layout.registration_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        //viewModel = ViewModelProvider(this, initFactory()).get(RegistrationViewModel::class.java)
-        initListeners()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         (activity?.application as App).appComponent.registrationComponentFactory()
                 .create(this)
                 .inject(this)
-
         navController = Navigation.findNavController(view)
+        initListeners()
     }
 
     private fun initListeners() {
         loginText.setOnClickListener { navController.navigate(R.id.action_to_login) }
         registerButton.setOnClickListener {
             if (TextUtils.isEmpty(firstnameInput.text.toString())) {
-                firstnameInput.error = "Please enter first name"
+                firstnameInput.error = "Введите имя"
                 return@setOnClickListener
             } else if (TextUtils.isEmpty(lastnameInput.text.toString())) {
-                firstnameInput.error = "Please enter last name"
+                firstnameInput.error = "Введите фамилию"
                 return@setOnClickListener
-            } else if (TextUtils.isEmpty(usernameInput.text.toString())) {
-                firstnameInput.error = "Please enter user name"
+            } else if (TextUtils.isEmpty(usernameInput.text.toString()) && isEmail(usernameInput.text.toString())) {
+                firstnameInput.error = "Введите почту"
                 return@setOnClickListener
             } else if (TextUtils.isEmpty(passwordInput.text.toString())) {
-                firstnameInput.error = "Please enter password"
+                firstnameInput.error = "Введите пароль"
                 return@setOnClickListener
             }
             viewModel.register(usernameInput.text.toString(), passwordInput.text.toString(), firstnameInput.text.toString(), lastnameInput.text.toString())
@@ -72,10 +65,9 @@ class RegistrationFragment : Fragment() {
         }
     }
 
-//    private fun initFactory() = ViewModelFactory(
-//            findCityUseCase = AppRepository(requireContext()).let {
-//                FindUseCase(it, Dispatchers.IO)
-//            }
-//    )
+    fun isEmail(email: String): Boolean {
+        val regexEmail = Regex(pattern = "^([a-zA-Z][a-zA-Z0-9-]{0,61}[a-zA-Z0-9].)*[a-zA-Z][a-zA-Z0-9-]{0,61}[a-zA-Z0-9]@([a-zA-Z][a-zA-Z0-9-]{0,61}[a-zA-Z0-9].)+[a-zA-Z]{2,6}$")
+        return regexEmail.containsMatchIn(email)
+    }
 
 }

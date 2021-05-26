@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.itis.regme.domain.FindUseCase
-import ru.itis.regme.presenter.ContactModel
+import ru.itis.regme.presenter.calendar.ContactModel
 import ru.itis.regme.presenter.calendar.customcalendar.FirebaseCallback
 import java.net.UnknownHostException
 

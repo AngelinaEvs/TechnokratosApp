@@ -1,10 +1,8 @@
 package ru.itis.regme.data.repository
 
-import android.provider.ContactsContract
 import ru.itis.regme.data.db.dao.ClientDao
 import ru.itis.regme.data.db.model.Client
 import ru.itis.regme.domain.interfaces.ClientRepository
-import ru.itis.regme.presenter.ContactModel
 
 class ClientRepositoryImpl (
     var clientDao: ClientDao
@@ -12,6 +10,10 @@ class ClientRepositoryImpl (
 
     override fun findAll(): List<String> {
         return clientDao.findAll()
+    }
+
+    override fun delete(number: String) {
+        return clientDao.delete(number)
     }
 
     override fun findAllClients(): List<Client> {

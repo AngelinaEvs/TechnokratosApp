@@ -34,4 +34,9 @@ class ClientInterractor @Inject constructor(
         }
     }
 
+    suspend fun delete(number: String) =
+        withContext(context) {
+            clientRepository.delete(number)
+        }
+
 }

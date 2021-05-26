@@ -6,13 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.launch
 import ru.itis.regme.data.db.model.Client
-import ru.itis.regme.data.repository.ClientRepositoryImpl
 import ru.itis.regme.domain.ClientInterractor
-import ru.itis.regme.domain.interfaces.ClientRepository
-import ru.itis.regme.presenter.ContactModel
 
 class ChoiceClientsViewModel(
     private val interractor: ClientInterractor
@@ -34,6 +30,12 @@ class ChoiceClientsViewModel(
     fun save(client: Client) {
         viewModelScope.launch {
             interractor.save(client)
+        }
+    }
+
+    fun delete(number: String) {
+        viewModelScope.launch {
+            interractor.delete(number)
         }
     }
 

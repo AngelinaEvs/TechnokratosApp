@@ -46,8 +46,6 @@ class CustomCalendarView(
         super.onAttachedToWindow()
         var curDate = simpleEventDateFormat.format(calendar.time)
         var curMonth = simpleMonthFormat.format(calendar.time)
-        calendarCallback.currentMonth(curDate, simpleMonthFormat.format(calendar.time))
-        //calendarCallback.currentDay(curDate.split("-")[0], curMonth, curDate)
     }
 
     fun prev() {

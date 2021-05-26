@@ -8,7 +8,6 @@ import ru.itis.regme.domain.FindUseCase
 class RegistrationViewModel(
         private val findUseCase: FindUseCase
 ) : ViewModel() {
-//    private var userMutableLivaData: MutableLiveData<FirebaseUser> = MutableLiveData()
 
     fun register(email: String, password: String, firstname: String, lastname: String) {
         viewModelScope.launch {

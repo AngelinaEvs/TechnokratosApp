@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.util.contains
 import androidx.core.util.size
 import ru.itis.regme.App
 import ru.itis.regme.R
@@ -36,10 +37,6 @@ class ChoiceClientsFragment : Fragment() {
         return inflater.inflate(R.layout.choice_clients_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity?.application as App).appComponent.choiceComponentFactory()
@@ -54,21 +51,16 @@ class ChoiceClientsFragment : Fragment() {
 
     private fun initListeners() {
         saveTV.setOnClickListener {
-//            listView.setOnItemClickListener { adapterView, view, i, l ->
             viewModel.getNumbersFromDb()
             var keys = ArrayList<Int>()
             val sba = listView.checkedItemPositions
             for (i in 0 until sba.size) {
                 if (sba[sba.keyAt(i)]) keys.add(sba.keyAt(i))
             }
-            Toast.makeText(requireContext(), keys.toString(), Toast.LENGTH_SHORT).show()
-            for (i in keys.indices) {
-                if (!dbnumbers.contains(array[keys[i]].number)) viewModel.save(
-                    Client(
-                        array[keys[i]].name,
-                        array[keys[i]].number
-                    )
-                )
+            for (i in array.indices) {
+                if (dbnumbers.contains(array[i].number)) {
+                    if (!keys.contains(i)) viewModel.delete(array[i].number!!)
+                } else if (keys.contains(i) && !dbnumbers.contains(array[i].number)) viewModel.save(Client(array[i].name, array[i].number))
             }
             viewModel.getNumbersFromDb()
         }

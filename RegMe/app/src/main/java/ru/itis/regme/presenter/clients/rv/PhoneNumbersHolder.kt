@@ -5,13 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.number_item.*
 import kotlinx.android.synthetic.main.number_item.name_client
 import kotlinx.android.synthetic.main.number_item.phone_number
 import kotlinx.android.synthetic.main.send_message_item.*
 import ru.itis.regme.R
-import ru.itis.regme.data.db.model.Client
-import ru.itis.regme.presenter.ContactModel
+import ru.itis.regme.presenter.calendar.ContactModel
 
 class PhoneNumbersHolder(
         override val containerView: View,

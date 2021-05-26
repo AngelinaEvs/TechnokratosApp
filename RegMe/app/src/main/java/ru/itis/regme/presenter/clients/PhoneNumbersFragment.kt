@@ -16,7 +16,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import ru.itis.regme.App
 import ru.itis.regme.R
-import ru.itis.regme.presenter.ContactModel
+import ru.itis.regme.presenter.calendar.ContactModel
 import ru.itis.regme.presenter.clients.rv.PhoneNumbersAdapter
 import javax.inject.Inject
 
@@ -39,12 +39,6 @@ class PhoneNumbersFragment : Fragment() {
         return inflater.inflate(R.layout.phone_numbers_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
-    //TODO показывать сообщение, если не дано разрешение на доступ к контактам
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity?.application as App).appComponent.phoneNumberComponentFactory()
@@ -66,8 +60,8 @@ class PhoneNumbersFragment : Fragment() {
 
     private fun initAdapter(list: List<ContactModel>) {
         phoneNumbersAdapter = PhoneNumbersAdapter(list) {
-            var mess = "Hi!!! ${it.time}"
-            var num = it.phone//"79677707814"
+            val mess = "Здравствуйте, напоминаю, что Вы записаны завтра на ${it.time}"
+            var num = it.phone
             if (num.startsWith("8")) num = "7" + num.substring(1)
             val isInstalled = isInstalled()
             if (isInstalled) {

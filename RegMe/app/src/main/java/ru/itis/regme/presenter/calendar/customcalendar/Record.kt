@@ -1,7 +1,6 @@
 package ru.itis.regme.presenter.calendar.customcalendar
 
-data class Record (
-//        var date: String,
-        var time: String,
-        var client: Client
+data class Record(
+    var time: String,
+    var client: Client
 )

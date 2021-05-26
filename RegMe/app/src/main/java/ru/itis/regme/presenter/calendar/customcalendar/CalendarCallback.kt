@@ -9,8 +9,6 @@ interface CalendarCallback {
 
             override fun setOnItemClickListener(year: String, monthCB: String, date: String) {}
 
-            override fun currentMonth(date: String, monthCB: String) {}
-
             override fun currentDay(year: String, monthCB: String, date: String) {}
         }
     }
@@ -18,8 +16,5 @@ interface CalendarCallback {
     fun next()
     fun prev()
     fun setOnItemClickListener(year: String, monthCB: String, date: String)
-
-    //date = datefocus, m=m, y = date.split
-    fun currentMonth(date: String, monthCB: String)
     fun currentDay(year: String, monthCB: String, date: String)
 }

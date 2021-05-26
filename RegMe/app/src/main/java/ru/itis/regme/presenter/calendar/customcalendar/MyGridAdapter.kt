@@ -41,13 +41,21 @@ class MyGridAdapter(
                 val day = listEvents[pointer].first.split("-")[2].toInt()
                 val mon = listEvents[pointer].first.split("-")[1].toInt()
                 if (dayNo == day && displayMonth == mon) {
-                    if (listEvents[pointer].second == 1) {
+                    if (listEvents[pointer].second == -1) {
                         if (day == today && mon == todayMonth) view?.setBackgroundResource(R.drawable.back_today_green)
                         else view?.setBackgroundResource(R.drawable.back_green_item_calendar)
                         pointer++
-                    } else if (listEvents[pointer].second > 1) {
+                    } else if (listEvents[pointer].second < 3) {
+                        if (day == today && mon == todayMonth) view?.setBackgroundResource(R.drawable.back_lite_item_today)
+                        else view?.setBackgroundResource(R.drawable.back_lite_item)
+                        pointer++
+                    } else if (listEvents[pointer].second < 5) {
                         if (day == today && mon == todayMonth) view?.setBackgroundResource(R.drawable.back_today_middle)
                         else view?.setBackgroundResource(R.drawable.back_item_calendar)
+                        pointer++
+                    } else if (listEvents[pointer].second > 4) {
+                        if (day == today && mon == todayMonth) view?.setBackgroundResource(R.drawable.back_item_hard_today)
+                        else view?.setBackgroundResource(R.drawable.back_item_hard)
                         pointer++
                     }
                 } else view?.setBackgroundResource(R.drawable.back_empty_item_calendar)

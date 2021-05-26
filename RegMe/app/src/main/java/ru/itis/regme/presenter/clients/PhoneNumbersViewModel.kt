@@ -1,18 +1,15 @@
 package ru.itis.regme.presenter.clients
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.itis.regme.data.db.model.Client
 import ru.itis.regme.domain.FindUseCase
-import ru.itis.regme.presenter.ContactModel
+import ru.itis.regme.presenter.calendar.ContactModel
 import ru.itis.regme.presenter.calendar.customcalendar.FirebaseCallback
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class PhoneNumbersViewModel(
     private val findUseCase: FindUseCase
@@ -35,7 +32,6 @@ class PhoneNumbersViewModel(
                 override fun onCallbackForLogin(status: Boolean) {}
                 override fun onCallbackForNotifications(list: List<ContactModel>) {
                     mNumbers.value = list
-                    Log.e("LIST", list.toString())
                 }
             })
         }

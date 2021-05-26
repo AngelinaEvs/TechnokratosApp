@@ -8,13 +8,6 @@
     android:orientation="vertical"
     android:background="#FAFBF6">
 
-<!--    <androidx.appcompat.widget.SearchView-->
-<!--        android:id="@+id/searchView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="48dp"-->
-<!--        android:background="@color/white" />-->
-
-    
     <ru.itis.regme.presenter.calendar.customcalendar.CustomCalendarView
         android:layout_marginTop="16dp"
         android:id="@+id/cal_test"
@@ -32,6 +25,7 @@
         android:layout_marginLeft="32dp">
 
         <TextView
+            android:id="@+id/rec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Записи"
@@ -60,13 +54,6 @@
             android:layout_marginTop="2dp"/>
 
         <TextView
-            android:id="@+id/wa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="***"
-            android:layout_marginLeft="16dp"/>
-
-        <TextView
             android:id="@+id/set_status_for_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,7 +63,8 @@
             android:paddingRight="10dp"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="16dp"
             android:background="@drawable/back_green_item_calendar"
             android:fontFamily="@font/my_fonts"
             android:textColor="@color/text_color_black"/>

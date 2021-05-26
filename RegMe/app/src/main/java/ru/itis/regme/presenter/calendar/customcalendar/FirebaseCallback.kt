@@ -1,6 +1,6 @@
 package ru.itis.regme.presenter.calendar.customcalendar
 
-import ru.itis.regme.presenter.ContactModel
+import ru.itis.regme.presenter.calendar.ContactModel
 
 interface FirebaseCallback {
     fun onCallback(list: List<Pair<String, Int>>)

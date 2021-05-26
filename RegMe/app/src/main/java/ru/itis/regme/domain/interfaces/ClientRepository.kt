@@ -14,4 +14,6 @@ interface ClientRepository {
     fun save(listClient: List<Client>)
 
     fun findAllFromTelephone()
+
+    fun delete(number: String)
 }

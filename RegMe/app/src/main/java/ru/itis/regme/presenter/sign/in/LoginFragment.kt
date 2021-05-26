@@ -51,11 +51,11 @@ class LoginFragment : Fragment() {
         registerText.setOnClickListener { navController.navigate(R.id.action_to_registration) }
         loginButton.setOnClickListener {
             if (TextUtils.isEmpty(usernameInput.text.toString())) {
-                usernameInput.error = "Please enter username"
+                usernameInput.error = "Перепроверьте почту"
                 return@setOnClickListener
             }
             else if (TextUtils.isEmpty(passwordInput.text.toString())) {
-                usernameInput.error = "Please enter password"
+                usernameInput.error = "Перепроверьте пароль"
                 return@setOnClickListener
             }
             viewModel.loginStatus(usernameInput.text.toString(), passwordInput.text.toString())
