@@ -22,11 +22,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initContacts()
-//        var periodicWorkRequest = PeriodicWorkRequest.Builder(NotificationWorkerManager::class.java, 15, TimeUnit.MINUTES)
-////            .setPeriodStartTime(18L, TimeUnit.HOURS)
-//            .build()
-//        WorkManager.getInstance().enqueue(periodicWorkRequest)
-        //TODO change by user preferences
         val c = Calendar.getInstance()
         c.set(Calendar.HOUR_OF_DAY, 21)
         c.set(Calendar.MINUTE, 6)
