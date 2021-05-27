@@ -23,8 +23,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initContacts()
         val c = Calendar.getInstance()
-        c.set(Calendar.HOUR_OF_DAY, 21)
-        c.set(Calendar.MINUTE, 6)
+        c.set(Calendar.HOUR_OF_DAY, 18)
+        c.set(Calendar.MINUTE, 0)
         c.set(Calendar.SECOND, 0)
         val am = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(applicationContext, NotificationReceiver::class.java).let { intent ->
