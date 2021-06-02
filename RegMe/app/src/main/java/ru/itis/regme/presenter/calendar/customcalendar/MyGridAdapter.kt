@@ -1,6 +1,7 @@
 package ru.itis.regme.presenter.calendar.customcalendar
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,12 +59,18 @@ class MyGridAdapter(
                         else view?.setBackgroundResource(R.drawable.back_item_hard)
                         pointer++
                     }
-                } else view?.setBackgroundResource(R.drawable.back_empty_item_calendar)
+                } else {
+                    if (dayNo == today && currentMonth == todayMonth) view?.setBackgroundResource(R.drawable.back_empty_today)
+                    else view?.setBackgroundResource(R.drawable.back_empty_item_calendar)
+                }
             } else {
                 if (!(displayMonth == currentMonth && displayYear == currentYear)) view?.setBackgroundResource(
                     R.drawable.back_grey_item_calendar
                 )
-                else view?.setBackgroundResource(R.drawable.back_empty_item_calendar)
+                else {
+                    if (dayNo == today && currentMonth == todayMonth) view?.setBackgroundResource(R.drawable.back_empty_today)
+                    else view?.setBackgroundResource(R.drawable.back_empty_item_calendar)
+                }
             }
         }
         return view!!
