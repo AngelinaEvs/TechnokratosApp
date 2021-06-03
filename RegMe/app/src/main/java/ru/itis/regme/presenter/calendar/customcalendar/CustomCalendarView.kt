@@ -44,8 +44,6 @@ class CustomCalendarView(
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        var curDate = simpleEventDateFormat.format(calendar.time)
-        var curMonth = simpleMonthFormat.format(calendar.time)
     }
 
     fun prev() {

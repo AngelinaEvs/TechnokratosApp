@@ -21,13 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presenter.forDelete.RegistrationActivity" />
-        <activity android:name=".presenter.forDelete.ProfileActivity" />
-        <activity
-            android:name=".presenter.forDelete.LoginActivity"
-            android:theme="@style/LoginAndRegistration">
-
-        </activity>
 
         <receiver android:name=".presenter.notifications.NotificationReceiver"/>
     </application>
