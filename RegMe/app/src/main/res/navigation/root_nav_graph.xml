@@ -1,0 +1,85 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_nav_graph"
+    app:startDestination="@id/splash">
+
+    <fragment
+        android:id="@+id/splash"
+        android:name="ru.itis.regme.presenter.splash.SplashFragment"
+        tools:layout="@layout/splash_fragment">
+
+        <action
+            android:id="@+id/action_to_sign"
+            app:destination="@id/login"/>
+        <action
+            android:id="@+id/action_to_profile"
+            app:destination="@id/profile"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/login"
+        android:name="ru.itis.regme.presenter.sign.in.LoginFragment"
+        tools:layout="@layout/login_fragment">
+
+        <action
+            android:id="@+id/action_to_registration"
+            app:destination="@id/registration"/>
+
+        <action
+        android:id="@+id/action_to_calendar"
+        app:destination="@id/calendar" />
+
+        <action
+            android:id="@+id/action_to_profile"
+            app:destination="@id/profile"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/registration"
+        android:name="ru.itis.regme.presenter.sign.up.RegistrationFragment"
+        tools:layout="@layout/registration_fragment">
+
+        <action
+            android:id="@+id/action_to_login"
+            app:destination="@id/login"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/calendar"
+        android:name="ru.itis.regme.presenter.calendar.CalendarFragment"
+        tools:layout="@layout/calendar_fragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/profile"
+        android:name="ru.itis.regme.presenter.profile.ProfileFragment"
+        tools:layout="@layout/profile_fragment">
+        <action
+            android:id="@+id/action_profile_to_login"
+            app:destination="@id/login" />
+        <action
+            android:id="@+id/action_profile_to_calendar"
+            app:destination="@id/calendar" />
+        <action
+            android:id="@+id/action_profile_to_numbers"
+            app:destination="@+id/numbers"/>
+        <action
+            android:id="@+id/action_profile_to_choiceClientsFragment"
+            app:destination="@id/choiceClientsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/numbers"
+        android:name="ru.itis.regme.presenter.clients.PhoneNumbersFragment"
+        tools:layout="@layout/phone_numbers_fragment">
+    </fragment>
+    <fragment
+        android:id="@+id/choiceClientsFragment"
+        android:name="ru.itis.regme.presenter.clients.choice.ChoiceClientsFragment"
+        android:label="choice_clients_fragment"
+        tools:layout="@layout/choice_clients_fragment" />
+
+</navigation>

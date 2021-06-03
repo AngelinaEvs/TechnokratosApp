@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".presenter.profile.ProfileFragment">
+
+    <TextView
+        android:id="@+id/sign_out_but"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back_but_sign"
+        android:padding="16dp"
+        android:text="Выйти из аккаунта"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.798"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumbers"
+        app:layout_constraintVertical_bias="0.712" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="21dp"
+        android:background="@drawable/rect_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:drawableEnd="@drawable/ic_keyboard_arrow_right_black_24dp"
+        android:text="Редактировать\nмою клиентскую базу  "
+        android:textColor="@color/text_color_black"
+        android:textSize="19sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.101"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="480dp"
+        android:layout_height="352dp"
+        android:background="@drawable/ic_blue_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.231"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/view"
+        android:layout_width="235dp"
+        android:layout_height="206dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/ic_vector_19_pink"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.962"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/myGraphic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="56dp"
+        android:drawableEnd="@drawable/ic_keyboard_arrow_right_black_24dp"
+        android:fontFamily="@font/my_fonts"
+        android:text="Мой календарь  "
+        android:textColor="@color/text_color_black"
+        android:textSize="19sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.069"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pr" />
+
+    <TextView
+        android:id="@+id/phoneNumbers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="56dp"
+        android:drawableEnd="@drawable/ic_keyboard_arrow_right_black_24dp"
+        android:text="Записи на завтра  "
+        android:textColor="@color/text_color_black"
+        android:textSize="19sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myGraphic" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
