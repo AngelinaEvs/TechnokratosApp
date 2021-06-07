@@ -170,7 +170,7 @@ class CalendarFragment : Fragment() {
                     )
                     viewModel.getInitRecords(y, month)
                     calendar.setUpCalendar()
-                } else Toast.makeText(requireContext(), "Для записи выберете номера из телефонной книжки", Toast.LENGTH_SHORT).show()
+                } else Toast.makeText(requireContext(), "Для записи выберите номера из телефонной книжки", Toast.LENGTH_SHORT).show()
                 alertDialog.dismiss()
             }
             alertDialog.show()
