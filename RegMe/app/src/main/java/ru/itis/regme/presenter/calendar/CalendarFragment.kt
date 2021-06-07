@@ -156,13 +156,21 @@ class CalendarFragment : Fragment() {
             alertDialog = builder.create()
             addView.findViewById<TextView>(R.id.addEventButton).setOnClickListener {
                 val cl = addView.findViewById<AutoCompleteTextView>(R.id.cl).text.toString()
-                val name = cl.split("(")[0]
-                val phone = cl.split("(")[1].split(")")[0]
-                viewModel.onSaveClicked(y, month, dateFocus,
-                        time, Client(name, phone))
-                viewModel.getRecordForDay(y, calendar.currentMonth?.text!!.split(" ")[0], dateFocus)
-                viewModel.getInitRecords(y, month)
-                calendar.setUpCalendar()
+                if (nnn.isNotEmpty() && cl.isNotEmpty() && (cl.contains("(") && cl.contains(")"))) {
+                    val name = cl.split("(")[0]
+                    val phone = cl.split("(")[1].split(")")[0]
+                    viewModel.onSaveClicked(
+                        y, month, dateFocus,
+                        time, Client(name, phone)
+                    )
+                    viewModel.getRecordForDay(
+                        y,
+                        calendar.currentMonth?.text!!.split(" ")[0],
+                        dateFocus
+                    )
+                    viewModel.getInitRecords(y, month)
+                    calendar.setUpCalendar()
+                } else Toast.makeText(requireContext(), "Для записи выберите номера из телефонной книжки", Toast.LENGTH_SHORT).show()
                 alertDialog.dismiss()
             }
             alertDialog.show()
